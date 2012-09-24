@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
+import android.os.Bundle;
 
 public class GetAccessTokenTask extends AsyncTask<Object, Object, AccessToken> {
 
@@ -41,12 +42,12 @@ public class GetAccessTokenTask extends AsyncTask<Object, Object, AccessToken> {
 
     private AccessToken storeAccessToken() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
-                Preferences.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+                Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
         Editor editor = sharedPreferences.edit();
         
-        editor.putString(Preferences.ACCESS_TOKEN, consumer.getToken());
-        editor.putString(Preferences.ACCESS_SECRET, consumer.getTokenSecret());
+        editor.putString(Constants.ACCESS_TOKEN, consumer.getToken());
+        editor.putString(Constants.ACCESS_SECRET, consumer.getTokenSecret());
         
         return new AccessToken(consumer.getToken(), consumer.getTokenSecret());
     }
@@ -54,8 +55,11 @@ public class GetAccessTokenTask extends AsyncTask<Object, Object, AccessToken> {
     @Override
     protected void onPostExecute(AccessToken accessToken) {
         Intent intent = new Intent(context, TweetActivity.class);
-        intent.putExtra(Preferences.ACCESS_TOKEN, accessToken.getToken());
-        intent.putExtra(Preferences.ACCESS_SECRET, accessToken.getTokenSecret());
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("oauth_consumer", consumer);
+        intent.putExtras(bundle);
+        intent.putExtra(Constants.ACCESS_TOKEN, accessToken.getToken());
+        intent.putExtra(Constants.ACCESS_SECRET, accessToken.getTokenSecret());
         context.startActivity(intent);
     }
 

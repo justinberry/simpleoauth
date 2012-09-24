@@ -43,19 +43,23 @@ public class MainActivity extends Activity {
         }
         else {
             Intent intent = new Intent(getApplicationContext(), TweetActivity.class);
-            intent.putExtra(Preferences.ACCESS_TOKEN, accessToken.getToken());
-            intent.putExtra(Preferences.ACCESS_SECRET, accessToken.getTokenSecret());
+            
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constants.CONSUMER, consumer);
+            intent.putExtras(bundle);
+            
+            intent.putExtra(Constants.ACCESS_TOKEN, accessToken.getToken());
+            intent.putExtra(Constants.ACCESS_SECRET, accessToken.getTokenSecret());
             getApplicationContext().startActivity(intent);
         }
     }
 
     private void initConsumerAndProviderSingletons() {
-        
         if (consumer == null || provider == null) {
-            consumer = new CommonsHttpOAuthConsumer(Preferences.CONSUMER_TOKEN, Preferences.CONSUMER_SECRET);
-            provider = new CommonsHttpOAuthProvider(Preferences.TWITTER_REQUEST_TOKEN_URI
-                    ,Preferences.TWITTER_ACCESS_TOKEN_URI
-                    ,Preferences.TWITTER_AUTH_URI);
+            consumer = new CommonsHttpOAuthConsumer(Constants.CONSUMER_TOKEN, Constants.CONSUMER_SECRET);
+            provider = new CommonsHttpOAuthProvider(Constants.TWITTER_REQUEST_TOKEN_URI
+                    ,Constants.TWITTER_ACCESS_TOKEN_URI
+                    ,Constants.TWITTER_AUTH_URI);
         }
     }
 
@@ -66,7 +70,7 @@ public class MainActivity extends Activity {
             return null;
         }
         
-        return extras.getString(Preferences.REQUEST_URI_KEY);
+        return extras.getString(Constants.REQUEST_URI_KEY);
     }
 
     @Override
@@ -84,13 +88,13 @@ public class MainActivity extends Activity {
     private AccessToken loadAccessTokenFromCache() {
         // MODE_PRIVATE = only this application can access these preferences
         SharedPreferences sharedPreferences = getApplicationContext()
-                .getSharedPreferences(Preferences.SHARED_PREFERENCES_NAME,
+                .getSharedPreferences(Constants.SHARED_PREFERENCES_NAME,
                         Context.MODE_PRIVATE);
 
         String accessToken = sharedPreferences.getString(
-                Preferences.ACCESS_TOKEN, null);
+                Constants.ACCESS_TOKEN, null);
         String accessSecret = sharedPreferences.getString(
-                Preferences.ACCESS_SECRET, null);
+                Constants.ACCESS_SECRET, null);
 
         if (accessToken != null && accessSecret != null) {
             return new AccessToken(accessToken, accessSecret);

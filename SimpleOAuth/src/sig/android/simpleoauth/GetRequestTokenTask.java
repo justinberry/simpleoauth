@@ -25,7 +25,7 @@ public class GetRequestTokenTask extends AsyncTask<Object, Object, String> {
 
         String requestURL = null;
         try {
-            requestURL = provider.retrieveRequestToken(consumer, Preferences.CALLBACK_URL);
+            requestURL = provider.retrieveRequestToken(consumer, Constants.CALLBACK_URL);
         } catch (OAuthException e) {
             System.err.println("Failed to contact provider");
             e.printStackTrace();
@@ -37,7 +37,7 @@ public class GetRequestTokenTask extends AsyncTask<Object, Object, String> {
     @Override
     protected void onPostExecute(String url) {
         Bundle bundle = new Bundle();
-        bundle.putString(Preferences.REQUEST_URI_KEY, url);
+        bundle.putString(Constants.REQUEST_URI_KEY, url);
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);

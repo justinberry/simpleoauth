@@ -1,6 +1,6 @@
 package sig.android.simpleoauth;
 
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+import oauth.signpost.OAuthConsumer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,11 +12,11 @@ public class TweetActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet);
         
-        String token = getIntent().getExtras().getString(Preferences.ACCESS_TOKEN);
-        String secret = getIntent().getExtras().getString(Preferences.ACCESS_SECRET);
+        String token = getIntent().getExtras().getString(Constants.ACCESS_TOKEN);
+        String secret = getIntent().getExtras().getString(Constants.ACCESS_SECRET);
         
-        CommonsHttpOAuthConsumer consumer = new CommonsHttpOAuthConsumer(Preferences.CONSUMER_TOKEN,
-                Preferences.CONSUMER_SECRET);
+        // TODO - still doesn't work :(
+        OAuthConsumer consumer = (OAuthConsumer) getIntent().getExtras().getSerializable(Constants.CONSUMER);
         consumer.setTokenWithSecret(token, secret);
         
         new TwitterStatusUpdateTask(consumer).execute();

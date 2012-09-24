@@ -21,7 +21,7 @@ public class CallbackInterceptingWebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        if (url.contains(Preferences.CALLBACK_URL)) {
+        if (url.contains(Constants.CALLBACK_URL)) {
             
             Uri uri = Uri.parse(url);
             String aouthVerifier = uri.getQueryParameter("oauth_verifier");

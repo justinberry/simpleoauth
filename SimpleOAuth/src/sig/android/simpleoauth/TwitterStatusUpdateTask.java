@@ -30,7 +30,7 @@ public class TwitterStatusUpdateTask extends AsyncTask<Object, Object, Object> {
             httpParams.setParameter("status", "Hello World");
             request.setParams(httpParams);
             
-            request.addHeader("Content-Type", "application/x-www-form-urlencoded");
+//            request.addHeader("Content-Type", "application/x-www-form-urlencoded");
             
             consumer.sign(request);
             
