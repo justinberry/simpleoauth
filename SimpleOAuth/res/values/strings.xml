@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="app_name">SimpleOAuth</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="get_access_token">Get Access Token</string>
+    <string name="get_request_lbl">Request Twitter Access</string>
+    <string name="complete">Complete!</string>
+    <string name="title_activity_tweet">TweetActivity</string>
+
+</resources>
