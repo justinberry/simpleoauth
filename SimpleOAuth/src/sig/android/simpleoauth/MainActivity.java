@@ -43,11 +43,6 @@ public class MainActivity extends Activity {
         }
         else {
             Intent intent = new Intent(getApplicationContext(), TweetActivity.class);
-            
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(Constants.CONSUMER, consumer);
-            intent.putExtras(bundle);
-            
             intent.putExtra(Constants.ACCESS_TOKEN, accessToken.getToken());
             intent.putExtra(Constants.ACCESS_SECRET, accessToken.getTokenSecret());
             getApplicationContext().startActivity(intent);

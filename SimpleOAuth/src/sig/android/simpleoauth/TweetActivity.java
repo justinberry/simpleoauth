@@ -1,6 +1,5 @@
 package sig.android.simpleoauth;
 
-import oauth.signpost.OAuthConsumer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,11 +14,7 @@ public class TweetActivity extends Activity {
         String token = getIntent().getExtras().getString(Constants.ACCESS_TOKEN);
         String secret = getIntent().getExtras().getString(Constants.ACCESS_SECRET);
         
-        // TODO - still doesn't work :(
-        OAuthConsumer consumer = (OAuthConsumer) getIntent().getExtras().getSerializable(Constants.CONSUMER);
-        consumer.setTokenWithSecret(token, secret);
-        
-        new TwitterStatusUpdateTask(consumer).execute();
+        new TwitterStatusUpdateTask(token, secret).execute();
     }
 
     @Override
