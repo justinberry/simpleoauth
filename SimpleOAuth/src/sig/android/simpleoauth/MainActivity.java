@@ -27,25 +27,25 @@ public class MainActivity extends Activity {
         initConsumerAndProviderSingletons();
         
         AccessToken accessToken = loadAccessTokenFromCache();
-        if (accessToken == null) {
-            String requestUri = retrieveLoadedRequestUri();
-            if (requestUri == null) {
-                new GetRequestTokenTask(this, consumer, provider).execute();
-            }
-            else {
-                Button getAccessTokenBtn = (Button) findViewById(R.id.getAccessTokenBtn);
-                getAccessTokenBtn.setEnabled(false);
-                getAccessTokenBtn.setText(R.string.complete);
-                WebView webView = (WebView) findViewById(R.id.webView);
-                webView.setWebViewClient(new CallbackInterceptingWebViewClient(consumer, provider));
-                webView.loadUrl(requestUri);
-            }
+        String requestUri = retrieveLoadedRequestUri();
+        
+        if (accessToken == null && requestUri == null) {
+            Button getAccessTokenBtn = (Button) findViewById(R.id.getAccessTokenBtn);
+            getAccessTokenBtn.setEnabled(true);
+        }
+        else if (accessToken == null && requestUri != null) {
+            Button getAccessTokenBtn = (Button) findViewById(R.id.getAccessTokenBtn);
+            getAccessTokenBtn.setEnabled(false);
+            getAccessTokenBtn.setText(R.string.complete);
+            WebView webView = (WebView) findViewById(R.id.webView);
+            webView.setWebViewClient(new CallbackInterceptingWebViewClient(consumer, provider));
+            webView.loadUrl(requestUri);
         }
         else {
-            Intent intent = new Intent(getApplicationContext(), TweetActivity.class);
+            Intent intent = new Intent(this, TweetActivity.class);
             intent.putExtra(Constants.ACCESS_TOKEN, accessToken.getToken());
             intent.putExtra(Constants.ACCESS_SECRET, accessToken.getTokenSecret());
-            getApplicationContext().startActivity(intent);
+            this.startActivity(intent);
         }
     }
 
@@ -97,8 +97,10 @@ public class MainActivity extends Activity {
         
         return null;
     }
-
-    public void onGetAccessTokenClick(View button) {
-
+    
+    public void onRequestTwitterAccessClick(View button) {
+        Button getAccessTokenBtn = (Button) findViewById(R.id.getAccessTokenBtn);
+        getAccessTokenBtn.setEnabled(false);
+        new GetRequestTokenTask(this, consumer, provider).execute();
     }
 }

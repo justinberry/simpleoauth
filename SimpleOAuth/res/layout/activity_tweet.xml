@@ -3,4 +3,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <EditText
+        android:id="@+id/tweetText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:gravity="center_vertical|top"
+        android:height="140dp"
+        android:inputType="textMultiLine"
+        android:maxLength="140" >
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/tweetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tweetText"
+        android:text="@string/tweet" 
+        android:onClick="onTweetClick"/>
+
+    <Button
+        android:id="@+id/clearAuthButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:onClick="onClearAuthClick"
+        android:text="@string/clear_auth" />
+
 </RelativeLayout>

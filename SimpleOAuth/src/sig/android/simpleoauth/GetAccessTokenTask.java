@@ -51,6 +51,8 @@ public class GetAccessTokenTask extends AsyncTask<Object, Object, AccessToken> {
         editor.putString(Constants.ACCESS_TOKEN, token);
         editor.putString(Constants.ACCESS_SECRET, secret);
         
+        editor.commit();
+        
         return new AccessToken(token, secret);
     }
 
